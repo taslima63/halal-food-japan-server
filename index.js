@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 const port = process.env.PORT || 5000;
@@ -30,6 +30,15 @@ async function run() {
             const items = await cursor.toArray();
             res.send(items);
         });
+
+
+        // get specific item from db 
+        app.get('/item/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const item = await itemCollection.findOne(query);
+            res.send(item);
+        });
     }
     finally {
     }
@@ -46,3 +55,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log('Hello port', port);
 })
+
+
+// authUser
+// T8eM7XnpthrLGT8K
