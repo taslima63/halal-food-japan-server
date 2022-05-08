@@ -30,7 +30,18 @@ async function run() {
             const items = await cursor.toArray();
             res.send(items);
         });
+        // get items by email
+        app.get('/myItem', async (req, res) => {
+            console.log('query', req.query);
+            const email = req.query.email;
+            console.log(email);
+            const query = { email: email };
+            const cursor = itemCollection.find(query);
+            let items;
+            items = await cursor.toArray();
 
+            res.send(items);
+        })
 
 
 
@@ -39,7 +50,6 @@ async function run() {
         app.put('/item/:id', async (req, res) => {
             const id = req.params.id;
             const updatedItem = req.body;
-            console.log(updatedItem);
             const filter = { _id: ObjectId(id) }
             const options = { upsert: true };
             const updatedDoc = {
