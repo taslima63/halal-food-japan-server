@@ -57,11 +57,10 @@ async function run() {
                     quantity: updatedItem.updatedQuantity,
                 }
             };
-
+            console.log(quantity);
             const result = await itemCollection.updateOne(filter, updatedDoc, options);
             res.send({ result });
         })
-
 
         // get specific item from db 
         app.get('/item/:id', async (req, res) => {
